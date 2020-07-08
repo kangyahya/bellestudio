@@ -58,7 +58,7 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array('database', 'session', 'form_validation');
+$autoload['libraries'] = array('database', 'session', 'form_validation','loop','SendMail','Language');
 
 /*
 | -------------------------------------------------------------------
@@ -89,7 +89,22 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array('url', 'security', 'file');
+$autoload['helper'] = array( 'url',
+    'language',
+    'text',
+    'cookie',
+    'getTextualPages',
+    'mb_ucfirst',
+    'purchase_steps',
+    'cleanreferral',
+    'except_letters',
+    'file',
+    'pagination',
+    'currencies',
+    'rcopy',
+    'rrmdir',
+    'rreadDir',
+    'savefile');
 
 /*
 | -------------------------------------------------------------------
@@ -132,4 +147,4 @@ $autoload['language'] = array();
 |
 |	$autoload['model'] = array('first_model' => 'first');
 */
-$autoload['model'] = array();
+$autoload['model'] = array('Global_model'=>'global', 'Home_admin_model'=>'admin');

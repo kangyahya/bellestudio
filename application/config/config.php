@@ -65,7 +65,21 @@ $config['uri_protocol']	= 'REQUEST_URI';
 | https://codeigniter.com/user_guide/general/urls.html
 */
 $config['url_suffix'] = '';
+/*
+  |--------------------------------------------------------------------------
+  | Send confirm link to email
+  |--------------------------------------------------------------------------
+ */
+$config['send_confirm_link'] = TRUE;
 
+/*
+  |--------------------------------------------------------------------------
+  | Admin history
+  |--------------------------------------------------------------------------
+  |
+  | When make it TRUE history in admin panel will work
+ */
+$config['admin_history'] = false;
 /*
 |--------------------------------------------------------------------------
 | Default Language
@@ -77,6 +91,20 @@ $config['url_suffix'] = '';
 |
 */
 $config['language']	= 'english';
+$config['language_abbr'] = 'en';
+$config['currency'] = 'Rp';
+$config['currencyKey'] = 'IDR';
+/*
+  |--------------------------------------------------------------------------
+  | Thumbnails
+  |--------------------------------------------------------------------------
+  |
+  | Thumbnails settings when upload images from administration
+  |
+ */
+$config['thumb_width'] = 300;
+$config['thumb_height'] = 300;
+$config['allowed_img_types'] = 'gif|jpg|png|jpeg|JPG|PNG|JPEG';
 
 /*
 |--------------------------------------------------------------------------
@@ -223,7 +251,7 @@ $config['allow_get_array'] = TRUE;
 | your log files will fill up very fast.
 |
 */
-$config['log_threshold'] = 0;
+$config['log_threshold'] = 1;
 
 /*
 |--------------------------------------------------------------------------
@@ -521,3 +549,5 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+$config['template'] = 'red';

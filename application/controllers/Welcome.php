@@ -8,7 +8,8 @@ class Welcome extends CI_Controller {
 	}
 	public function index()
 	{
-		$x['paket'] = $this->global->view_paket();
+		$x['paket'] = $this->global->getPaket();
+		$x['kategori'] = $this->db->get('tbl_kategori_paket')->result();
 		$this->load->view('homepage',$x);
 	}
 }

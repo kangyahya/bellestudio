@@ -43,9 +43,38 @@ class Member extends CI_Controller {
                 $this->form_validation->set_rules('uid_paket', 'UID Paket','required');
                 if($this->form_validation->run() == false){
                     $data['member'] = $this->member->getmemberbyid();
+                    $data['paket'] = $this->global->getpaketbyid($this->session->userdata('shopping_cart'));
+                    $data['tambahan'] = $this->global->gettambahanbypaket(['uid_paket'=>$data['paket']->uid]);
+                    $data['notes'] = $this->global->getNoteByPaket(['uid_paket'=>$data['paket']->uid]);
+                    $data['kategori'] =  $this->global->getKategoriById(['id'=>$data['paket']->id_kategori])->row();
+                    $data['paket_kategori'] = $this->global->getpaketbynotid($id);
+                    $this->load->view('home/detail_paket', $data);
+                }else{
+                    $this->reserve->insert();
+                }
+                
+            }else{
+                $data['list'] = $this->reserve->getAllbyMember();
+                $data['paket'] = $this->global->getpaketbyid($this->session->userdata('shopping_cart'));
+                $data['tambahan'] = $this->global->gettambahanbypaket(['uid_paket'=>$data['paket']->uid]);
+                $data['temporary'] = $this->db->get_where('v_temp',['uid_member'=>$this->session->userdata('uid'),'uid_paket'=>$data['paket']->uid]);
+                $this->load->view('reservation/reservation',$data);
+            }
+        }else{
+            redirect("register");
+        }
+    }
+    public function paket($id=null){
+            if(!empty($id)){
+                $this->form_validation->set_rules('uid_paket', 'UID Paket','required');
+                if($this->form_validation->run() == false){
+                    $data['member'] = $this->member->getmemberbyid();
                     $data['paket'] = $this->global->getpaketbyid($id);
                     $data['tambahan'] = $this->global->gettambahanbypaket(['uid_paket'=>$data['paket']->uid]);
-                    $this->load->view('member/reservation', $data);
+                    $data['notes'] = $this->global->getNoteByPaket(['uid_paket'=>$data['paket']->uid]);
+                    $data['kategori'] =  $this->global->getKategoriById(['id'=>$data['paket']->id_kategori])->row();
+                    $data['paket_kategori'] = $this->global->getpaketbynotid($id);
+                    $this->load->view('home/detail_paket', $data);
                 }else{
                     $this->reserve->insert();
                 }
@@ -54,9 +83,7 @@ class Member extends CI_Controller {
                 $data['list'] = $this->reserve->getAllbyMember();
                 $this->load->view('member/list_reservation',$data);
             }
-        }else{
-            redirect("register");
-        }
+        
     }
     public function logout(){
         $this->session->sess_destroy();
@@ -72,6 +99,31 @@ class Member extends CI_Controller {
             redirect('login');
         }
 		
+    }
+    public function manageShoppingCart()
+    {
+        $this->session->set_userdata('shopping_cart', $this->input->post('id_paket'));
+        redirect('reservation');
+    }
+    public function manageCheckout()
+    {
+        redirect('checkout');
+    }
+    
+    public function sendtambahan(){
+        $data = [
+            'uid_paket' => $this->session->userdata('shopping_cart'),
+            'uid_member' => $this->session->userdata('uid'),
+            'uid_tambahan' => $this->input->post('id'),
+        ];
+        $this->db->insert('tmp_reservation',$data);
+        redirect('reservation','refresh');
+    }
+    public function hapustambahan(){
+        $this->db->where('uid_tambahan',$this->input->post('id'));
+        $this->db->where('uid_member',$this->session->userdata('uid'));
+        $this->db->delete('tmp_reservation');
+        redirect('reservation','refresh');
     }
     function get_username_availability() {
 		if (isset($_POST['username'])) {

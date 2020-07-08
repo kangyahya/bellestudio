@@ -52,8 +52,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'welcome';
 $route['register'] = 'member/register';
 $route['login'] = 'member/login';
+$route['logout'] = 'member/logout';
 
-$route['reservation/(:any)'] = 'member/reservation/$1';
+
 $route['reservation'] = 'member/reservation/';
+$route['reservation/(:any)'] = 'member/reservation/$1';
+$route['paket'] = 'member/paket/';
+$route['paket/(:any)'] = 'member/paket/$1';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+//checkout
+$route['checkout'] = 'checkout';
